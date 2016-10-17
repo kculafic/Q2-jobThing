@@ -1,9 +1,9 @@
 (function() {
-$('#submit').submit((event) => {
+$('.signup').click((event) => {
   event.preventDefault();
 
-  const firstName = $('#firstName').val().trim();
-  const lastName = $('#lastName').val().trim();
+  const firstName = $('#first_name').val().trim();
+  const lastName = $('#last_name').val().trim();
   const email = $('#email').val().trim();
   const password = $('#password').val();
 
