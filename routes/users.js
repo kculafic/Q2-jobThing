@@ -9,6 +9,22 @@ const { camelizeKeys, decamelizeKeys } = require('humps');
 
 // eslint-disable-next-line new-cap
 const router = express.Router();
+router.get('/users/:id', (req, res, next) => {
+ knex('users')
+ .where('id', req.params.id)
+ .first()
+ .then((row) => {
+   if (!row) {
+     throw boom.create(404, 'Not Found');
+   }
+   const user = camelizeKeys(row);
+
+   res.send(user);
+ })
+ .catch((err) => {
+   next(err);
+ });
+ });
 
 router.post('/users', (req, res, next) => {
   const { firstName, lastName, email, password } = req.body;
