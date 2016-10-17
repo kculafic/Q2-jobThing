@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "knex": "knex"
+    "knex": "knex",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "Karl <karlwatson09@gmail.com>",
@@ -20,5 +21,13 @@
     "knex": "^0.12.5",
     "morgan": "^1.7.0",
     "pg": "^6.1.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kculafic/jobThing.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kculafic/jobThing/issues"
+  },
+  "homepage": "https://github.com/kculafic/jobThing#readme"
 }
