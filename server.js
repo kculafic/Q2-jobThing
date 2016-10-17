@@ -6,6 +6,7 @@ const port = process.env.PORT || 8000;
 
 const path = require('path');
 app.disable('x-powered-by');
+
 app.use(express.static(path.join('public')));
 
 const bodyParser = require('body-parser');
