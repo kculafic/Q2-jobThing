@@ -1,0 +1,21 @@
+{
+  "name": "public",
+  "version": "1.0.0",
+  "description": "![alt tag](https://raw.github.com/dogfalo/materialize/master/images/materialize.gif) ===========",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "knex": "knex"
+  },
+  "keywords": [],
+  "author": "Karl <karlwatson09@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt-as-promised": "^1.1.0",
+    "boom": "^4.2.0",
+    "express": "^4.14.0",
+    "humps": "^1.1.0",
+    "knex": "^0.12.5",
+    "pg": "^6.1.0"
+  }
+}
