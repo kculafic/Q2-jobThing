@@ -2,7 +2,7 @@
 body {
   background-image: url(../img/roadfog_1.jpg);
   box-sizing: border-box;
-  
+
 }
 
 #shopbutton {
@@ -29,3 +29,8 @@ body {
   padding: 3px;
   margin-bottom: 3px;
 }
+
+/*.card-image:  {
+  padding-top: 50px;
+  vertical-align: middle;
+}*/
