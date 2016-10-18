@@ -34,7 +34,7 @@ router.post('/jobApplications', authorize, (req, res, next ) => {
   const positionTitle = req.body.positionTitle;
   const url = req.body.url;
   const location = req.body.location;
-  
+
 // where the name in the db = the name that the client inputed
   knex('companies')
     .where('company_name', companyName)
@@ -47,6 +47,7 @@ router.post('/jobApplications', authorize, (req, res, next ) => {
       rp(`http://api.glassdoor.com/api/api.htm?t.p=100491&t.k=fViN5CriXem&userip=0.0.0.0&useragent=&format=json&v=1&action=employers&q=${companyName}`)
       .then(function (company) {
        // Process company
+       return company;
         console.log(company);
       })
       .catch(function (err) {
@@ -56,13 +57,19 @@ router.post('/jobApplications', authorize, (req, res, next ) => {
     }
 
       else {// if the company does exist in our companyDB
-        console.log('else');
+        console.error(err);
          const company = camelizeKeys(rows);
          console.log(company);
          const jobApplication= { userId, positionTitle, location, url };
 
       knex('jobApplications')
-        .insert(decamelizeKeys(jobApplication));
+        .insert(decamelizeKeys(jobApplication))
+        .then(function (c){
+          res.status(200);
+        })
+        .catch((err) => {
+          next(err);
+        });
 
       }
     })
@@ -70,14 +77,6 @@ router.post('/jobApplications', authorize, (req, res, next ) => {
       next(err);
     });
 });
-
-
-
-
-
-
-
-
 
 
 module.exports = router;
