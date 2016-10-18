@@ -5,9 +5,9 @@ exports.up = function(knex, Promise) {
     table.increments();
     table.integer('company_id').notNullable();
     table.string('name').notNullable().defaultTo();
-    table.string('website').notNullable().defaultTo();
-    table.string('industry').notNullable().unique();
-    table.string('logo').nullable();
+    table.string('website');
+    table.string('industry');
+    table.string('logo');
     table.timestamps(true,true);
   })
 };

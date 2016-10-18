@@ -6,7 +6,7 @@ exports.seed = function(knex) {
         id: 1,
         user_id: 1,
         company_id: 1,
-        job_title:'Software Developer',
+        position_title:'Software Developer',
         location: 'Seattle, WA',
         url:'www.amazon.com/jobs',
         interview:true,

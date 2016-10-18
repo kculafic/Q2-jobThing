@@ -5,10 +5,10 @@ exports.up = function(knex, Promise) {
     table.increments();
     table.integer('user_id').notNullable().references('users.id').onDelete('CASCADE');
     table.integer('company_id').notNullable().references('companies.id').onDelete('CASCADE');
-    table.string('job_title').notNullable();
+    table.string('position_title').notNullable();
     table.string('location').notNullable();
     table.string('url');
-    table.boolean('interview').notNullable().defaultTo(false);
+    table.boolean('interview');
     table.string('notes');
     table.timestamps(true,true);
   })

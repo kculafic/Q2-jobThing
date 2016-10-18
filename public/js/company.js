@@ -1,15 +1,29 @@
-
+(function() {
+  'use strict';
   $('.form').click((event) => {
     event.preventDefault();
 
-    const company = $('#company').val().trim();
+    const name = $('#companyName').val().trim();
 
-    if (!company) {
-      return Materialize.toast('company must not be blank', 3000);
+    if (!name) {
+      return Materialize.toast('Company name must not be blank', 3000);
     }
+;
+  const options = {
+    contentType: 'application/json',
+    data: JSON.stringify({name}),
+    dataType: 'json',
+    type: 'POST',
+    url: '/jobApplications '
+  };
 
-    rp(`api.glassdoor.com/api/api.htm?t.p=100491&t.k=fViN5CriXem&userip=0.0.0.0&useragent=&format=json&v=1&action=employers&q=${company}`)
-      .then(function (companies) {
-        console.log(companies);
-      });
-  });
+  $.ajax(options)
+    .done(() => {
+      window.location.href = '/user.html';
+    })
+    .fail(($xhr) => {
+      Materialize.toast($xhr.responseText, 3000);
+    });
+});
+
+})();
