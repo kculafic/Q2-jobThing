@@ -1,10 +1,16 @@
 'use strict';
 
+const boom = require('boom');
+const bcrypt = require('bcrypt-as-promised')
 const express = require('express');
+const jwt = require('jsonwebtoken');
+const knex = require('../knex');
+const { camelizeKeys, decamelizeKeys } = require('humps');
 const router = express.Router();
 
 router.post('/token', (req, res, next ) => {
-  console.log(req.body, 'sldkjflksjdf');
+  console.log(req.body);
+
   const { email, password } = req.body;
 
   if (!email || !email.trim()) {
@@ -21,7 +27,6 @@ router.post('/token', (req, res, next ) => {
     .where('email', email)
     .first()
     .then((row) => {
-      console.log('hi');
       if(!row) {
         throw boom.create(400, 'Bad email or password');
       }
@@ -42,7 +47,6 @@ router.post('/token', (req, res, next ) => {
       expires: expiry,
       secure: router.get('env') === 'production'
     });
-
     res.send(user);
   })
   .catch(bcrypt.MISMATCH_ERROR, () => {

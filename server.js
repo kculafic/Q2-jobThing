@@ -3,10 +3,12 @@
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 8000;
+require('dotenv').config();
 
 const path = require('path');
 app.disable('x-powered-by');
 
+app.get('env');
 app.use(express.static(path.join('public')));
 
 const bodyParser = require('body-parser');
