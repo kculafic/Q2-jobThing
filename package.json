@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "knex": "knex",
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "keywords": [],
   "author": "Karl <karlwatson09@gmail.com>",
@@ -20,6 +20,7 @@
     "humps": "^1.1.0",
     "knex": "^0.12.5",
     "morgan": "^1.7.0",
+    "nodemon": "^1.11.0",
     "pg": "^6.1.0",
     "request": "^2.75.0",
     "request-promise": "^4.1.1"

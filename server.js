@@ -14,12 +14,14 @@ const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const users = require('./routes/users');
 const companies = require('./routes/companies');
+const token = require('./routes/token');
 
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(morgan('short'));
 app.use(users);
 app.use(companies);
+app.use(token);
 
 app.use((err, _req, res, _next) => {
   if (err.output && err.output.statusCode) {
@@ -28,7 +30,7 @@ app.use((err, _req, res, _next) => {
       .set('Content-Type', 'text/plain')
       .send(err.message);
   }
-})
+});
 
 app.use((err, _req, res, _next) => {
   if (err.output && err.output.statusCode) {
