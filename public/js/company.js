@@ -3,15 +3,18 @@
   $('.form').click((event) => {
     event.preventDefault();
 
-    const name = $('#companyName').val().trim();
+    const companyName = $('#companyName').val().trim();
+    const location = $('#location').val().trim();
+    const url = $('#urlposting').val().trim();
+    const position = $('#position').val().trim();
 
-    if (!name) {
+    if (!companyName) {
       return Materialize.toast('Company name must not be blank', 3000);
     }
 ;
   const options = {
     contentType: 'application/json',
-    data: JSON.stringify({name}),
+    data: JSON.stringify({ companyName, postion, location, url }),
     dataType: 'json',
     type: 'POST',
     url: '/jobApplications '

@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
   return knex.schema.createTable('companies', (table) => {
     table.increments();
     table.integer('company_id').notNullable();
-    table.string('name').notNullable().defaultTo();
+    table.string('company_name').notNullable().defaultTo();
     table.string('website');
     table.string('industry');
     table.string('logo');
