@@ -14,12 +14,11 @@
 ;
   const options = {
     contentType: 'application/json',
-    data: JSON.stringify({ companyName, postion, location, url }),
+    data: JSON.stringify({ companyName, position, location, url }),
     dataType: 'json',
     type: 'POST',
     url: '/jobApplications '
   };
-
   $.ajax(options)
     .done(() => {
       window.location.href = '/user.html';

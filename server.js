@@ -17,6 +17,7 @@ const morgan = require('morgan');
 const users = require('./routes/users');
 const companies = require('./routes/companies');
 const token = require('./routes/token');
+const jobApplications = require('./routes/jobApplications');
 
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -24,6 +25,7 @@ app.use(morgan('short'));
 app.use(users);
 app.use(companies);
 app.use(token);
+app.use(jobApplications);
 
 app.use((err, _req, res, _next) => {
   if (err.output && err.output.statusCode) {
