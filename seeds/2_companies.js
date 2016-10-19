@@ -9,7 +9,19 @@ exports.seed = function(knex) {
         company_name: 'Amazon',
         website: 'www.amazon.com',
         industry: 'Tech',  // youreawizard
-        logo: 'https://media.glassdoor.com/sqll/6036/amazon-com-squarelogo-1432805660196.png'
+        logo: 'https://media.glassdoor.com/sqll/6036/amazon-com-squarelogo-1432805660196.png',
+        overall_rating:4
+      }]);
+    })
+    .then(() => {
+      return knex('companies').insert([{
+        id: 2,
+        company_id:2,
+        company_name: 'G',
+        website: 'www.amazon.com',
+        industry: 'Tech',  // youreawizard
+        logo: 'https://media.glassdoor.com/sqll/6036/amazon-com-squarelogo-1432805660196.png',
+        overall_rating:4
       }]);
     })
     .then(() => {

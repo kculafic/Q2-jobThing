@@ -23,59 +23,110 @@ const authorize = function(req, res, next) {
   });
 };
 
-  router.get('/jobApplications', (req,res,next) => {
-    console.log('hello');
-  });
+  // router.get('/jobApplications', (req,res,next) => {
+  //   console.log('hello');
+  // });
 
 router.post('/jobApplications', authorize, (req, res, next ) => {
   console.log("helll");
-  const userId = req.token.userId;
+  // req.token.userId;
+  const userId = 1;
   const companyName = req.body.companyName;
-  const positionTitle = req.body.positionTitle;
+  const positionTitle = req.body.position;
   const url = req.body.url;
   const location = req.body.location;
 
-// where the name in the db = the name that the client inputed
   knex('companies')
     .where('company_name', companyName)
-    .first()
-    .then((row) => {
+    .then((exists) => {
 
-// if the company does NOT exist in our companyDB
-      if (!row) {
-      // make api request
+    if(exists.length <= 0){
+      console.log('request');
       rp(`http://api.glassdoor.com/api/api.htm?t.p=100491&t.k=fViN5CriXem&userip=0.0.0.0&useragent=&format=json&v=1&action=employers&q=${companyName}`)
-      .then(function (company) {
-       // Process company
-       return company;
-        console.log(company);
+        .then(function (companies) {
+         // Process company
+          // console.log(companies);
+          const company = JSON.parse(companies);
+          // console.log(company.response.employers[0]);
+          // res.send(true);
+          const companyId = company.response.employers[0].id;
+          const website =  company.response.employers[0].website;
+          const industry =  company.response.employers[0].industry;
+          const logo =  company.response.employers[0].squareLogo;
+          const overallRating = parseInt(company.response.employers[0].overallRating);
+          return knex.transaction(function (t) {
+          return knex('companies')
+            .transacting(t)
+            .insert(decamelizeKeys({
+              companyId,
+              companyName,
+              website,
+              industry,
+              logo,
+              overallRating
+              }))
+            .returning('id')
+            .then(function (response) {
+              // console.log(response[0]);
+              const companyId = response[0];
+              console.log(companyId);
+              return knex('job_applications')
+                .transacting(t)
+                .insert(decamelizeKeys({
+                  userId,
+                  companyId,
+                  positionTitle,
+                  location,
+                  url
+                }));
+            })
+            .then(t.commit)
+            .catch(t.rollback)
+        })
+        .then(function () {
+          // transaction suceeded, data written
+          res.send(true);
+        })
+        .catch(function () {
+          // transaction failed, data rolled back
+          console.log('d');
+          res.send(false);
+        });
+      }).catch(function (err) {
+        console.log(err);
       })
-      .catch(function (err) {
-       //  failed...
-        next(err);
+    }
+    else {
+      return knex.transaction(function (t) {
+        return knex('companies')
+          .transacting(t)
+          .where('company_name', companyName)
+          .then(function (response) {
+            const companyId = response[0].id;
+            return knex('job_applications')
+              .transacting(t)
+              .insert(decamelizeKeys({
+                userId,
+                companyId,
+                positionTitle,
+                location,
+                url
+              }))
+          })
+          .then(t.commit)
+          .catch(t.rollback)
+        })
+    .then(function () {
+      // transaction suceeded, data written
+      res.send(true);
+    })
+    .catch(function () {
+      console.log('ff');
+      // transaction failed, data rolled back
+        res.send(false);
       });
     }
-
-      else {// if the company does exist in our companyDB
-        console.error(err);
-         const company = camelizeKeys(rows);
-         console.log(company);
-         const jobApplication= { userId, positionTitle, location, url };
-
-      knex('jobApplications')
-        .insert(decamelizeKeys(jobApplication))
-        .then(function (c){
-          res.status(200);
-        })
-        .catch((err) => {
-          next(err);
-        });
-
-      }
-    })
-    .catch((err) => {
-      next(err);
-    });
+  });//catch fpr first
 });
 
 
