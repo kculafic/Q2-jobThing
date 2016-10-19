@@ -8,7 +8,7 @@ exports.up = function(knex, Promise) {
     table.string('website');
     table.string('industry');
     table.string('logo');
-    table.integer('overall_rating');
+    table.float('overall_rating');
     table.timestamps(true,true);
   })
 };

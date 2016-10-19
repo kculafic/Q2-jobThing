@@ -21,7 +21,7 @@ exports.seed = function(knex) {
         website: 'www.amazon.com',
         industry: 'Tech',  // youreawizard
         logo: 'https://media.glassdoor.com/sqll/6036/amazon-com-squarelogo-1432805660196.png',
-        overall_rating:4
+        overall_rating:4.5
       }]);
     })
     .then(() => {
