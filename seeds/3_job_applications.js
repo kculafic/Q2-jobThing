@@ -12,7 +12,8 @@ exports.seed = function(knex) {
         interview:true,
         notes:'Study hard',
         created_at: new Date('2016-06-29 14:26:16 UTC'),
-        updated_at: new Date('2016-06-29 14:26:16 UTC')
+        updated_at: new Date('2016-06-29 14:26:16 UTC'),
+        date_applied:new Date('2016-10-19')
       }]);
     })
     .then(() => {

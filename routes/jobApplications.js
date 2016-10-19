@@ -63,6 +63,7 @@ router.post('/jobApplications', authorize, (req, res, next ) => {
   const positionTitle = req.body.position;
   const url = req.body.url;
   const location = req.body.location;
+  const dateApplied = req.body.date;
 
   knex('companies')
     .where('company_name', companyName)
@@ -105,7 +106,8 @@ router.post('/jobApplications', authorize, (req, res, next ) => {
                   companyId,
                   positionTitle,
                   location,
-                  url
+                  url,
+                  dateApplied
                 }));
             })
             .then(t.commit)
@@ -138,7 +140,8 @@ router.post('/jobApplications', authorize, (req, res, next ) => {
                 companyId,
                 positionTitle,
                 location,
-                url
+                url,
+                dateApplied
               }))
           })
           .then(t.commit)
