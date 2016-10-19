@@ -23,9 +23,21 @@ const authorize = function(req, res, next) {
   });
 };
 
-  // router.get('/jobApplications', (req,res,next) => {
-  //   console.log('hello');
-  // });
+  router.get('/jobApplications', (req,res,next) => {
+    knex('job_applications')
+    .where('user_id', 1)
+    .then((jobCollection) => {
+
+      // console.log(jobCollection);
+
+
+      res.send(jobCollection);
+    })
+    .catch((err) => {
+     next(err);
+   });
+  });
+
 
 router.post('/jobApplications', authorize, (req, res, next ) => {
   console.log("helll");
