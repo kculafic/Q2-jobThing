@@ -1,23 +1,6 @@
 $(document).ready(function() {
   'use strict';
 
-// DISPLAY JOB APPLICATION CARDS
-  // connect to companyTable
-  // connect to jobApplicationsTable
-  // get user_id
-  // pull rows (from jobApplicationsTable) according to user_id
-  // pull data for the appropriate company (from companyTable)
-  // set up card building components
-  // take row data (jobApplication data AND company data)
-  // ...append each piece into each card
-  // loop through cards to sort by editedAt, and to display (stack)
-
-// DISPLAY NEW JOB APPLICATION
-  // connect to form
-  // pull field parameters from form
-  // push parameters into a new card
-  // append and display new card
-
   const options = {
     contentType: 'application/json',
     // data: JSON.stringify({ firstName, lastName, email, password }),
@@ -35,9 +18,9 @@ $(document).ready(function() {
       for (let job of jobCollection){
 
         /* DELETE THESE ONCE JOBCOLLECTION IS UPDATED */
-        job.logo = 'https://media.glassdoor.com/sql/6036/amazon-com-squarelogo-1432805660196.png'
-        job.dateApplied = new Date();
-        job.companyName = 'Bob Inc.';
+        // job.logo = 'https://media.glassdoor.com/sql/6036/amazon-com-squarelogo-1432805660196.png'
+        // job.dateApplied = new Date();
+        // job.companyName = 'Bob Inc.';
         /* ^^^^^^^^^^^^^^^^^^^^^ */
 
 
