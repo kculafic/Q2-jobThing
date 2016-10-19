@@ -23,14 +23,30 @@ const authorize = function(req, res, next) {
   });
 };
 
+// router.get('/favorites', authorize, (req, res, next) => {
+// const { userId } = req.token;
+// // const userId = req.token;
+//
+// knex('favorites')
+//   .innerJoin('books', 'books.id', 'favorites.book_id')
+//   .where('favorites.user_id', userId)
+//   .orderBy('books.title', 'ASC')
+//   .then((rows) => {
+//     const favorites = camelizeKeys(rows);
+//
+//     res.send(favorites);
+//   })
+//   .catch((err) => {
+//     next(err);
+//   });
+// });
   router.get('/jobApplications', (req,res,next) => {
     knex('job_applications')
+    .innerJoin('companies', 'companies.id', 'job_applications.company_id')
     .where('user_id', 1)
     .then((jobCollection) => {
 
       // console.log(jobCollection);
-
-
       res.send(jobCollection);
     })
     .catch((err) => {

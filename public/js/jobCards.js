@@ -31,7 +31,7 @@ $(document).ready(function() {
       console.log(jobCollection);
 
       // iterate over data to build out view
-
+      $('div');
 
       // DOM stuffs
     })
