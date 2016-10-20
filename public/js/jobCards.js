@@ -20,35 +20,143 @@ $(document).ready(function() {
         /* DELETE THESE ONCE JOBCOLLECTION IS UPDATED */
         // job.logo = 'https://media.glassdoor.com/sql/6036/amazon-com-squarelogo-1432805660196.png'
         // job.dateApplied = new Date();
-        // job.companyName = 'Bob Inc.';
+        // job.jobName = 'Bob Inc.';
         /* ^^^^^^^^^^^^^^^^^^^^^ */
-        console.log(job);
 
-        const $card = $('<div>').addClass('card horizontal card-panel hoverable col s12 m7 foobarbobwilley');
+
+        /* ------------------------ Job Card ------------------------ */
+        const $card = $('<div>').addClass('card horizontal card-panel hoverable col s12 m7');
         const $logowrapper = $('<div>').addClass('card-image center-align valign-wrapper card-panel hoverable');
         const $logoimage = $('<img>').attr('src', job.logo );
         const $jobinfo = $('<div>').addClass('card-stacked card-content');
         const $positiontitle = $('<h4>').text(job.position_title);
-        const $companyandlocation = $('<h5>').text(`${job.companyName}, ${job.location}`);
-        const $dateapplied = $('<p>').text(job.dateApplied);
-        const $companyinfo = $('<div>').addClass('right-align');
-        const $moinfo = $('<a>').text('Company Information');
+        const $companyandlocation = $('<h5>').text(`${job.company_name}, ${job.location}`);
+        const $dateapplied = $('<p>').text(job.date_applied);
+        const $jobId = $('<p>').addClass('jobApplicationId').text(`[Job # ${job.id} ]`)
+
+        const $companyinfoButton = $('<div>');
+        const $moinfo = $('<a>').addClass('center-align waves-effect waves-light btn white-text modal-trigger').attr('href', '#modal1' );
 
         $logowrapper.append($logoimage);
         $jobinfo.append($positiontitle);
         $jobinfo.append($companyandlocation);
         $jobinfo.append($dateapplied);
+        $jobinfo.append($jobId);
         $companyinfo.append($moinfo);
         $jobinfo.append($companyinfo);
+
         $card.append($logowrapper);
         $card.append($jobinfo);
+
         $container.prepend($card);
+
+        /* ------------------------ +++++++++++++ ------------------------ */
+        /* ------------------------ Company Modal ------------------------ */
+        /* ------------------------ +++++++++++++ ------------------------ */
+
+        const $modalcontainer = $('<div>').addClass('modal').addId('modal1');
+        const $modalcontent = $('<div>').addClass('modal-content');
+        const $modalThirdContent = $('<div>').addClass('col s12 m7');
+
+        /* ------------------------ Company Header ------------------------ */
+
+        const $cHeader = $('<div>').addClass('card horizontal card-panel hoverable');
+        const $cHeaderLogo = $('<div>').addClass('card-image center-align valign-wrapper card-panel hoverable');
+        const $cHeaderLogoImage = $('<img>').attr('src', job.logo );
+
+        const $cHeaderDiv = $('<div>').addClass('card-stacked');
+        const $cHeaderSubDiv = $('<div>').addClass('card-content left-align');
+        const $cHeaderComanyName = $('<h3>').text(job.company_name);
+        const $cHeaderCompanyWebsite = $('<a>').attr('href', job.website );
+        const $cHeaderIndustry = $('<p>').text(job.industry);
+
+        $cHeaderLogo.append($cHeaderCompanyLogoImage);
+        $cHeader.append($cHeaderLogo);
+
+        $cHeaderSubDiv.append($cHeaderCompanyName);
+        $cHeaderSubDiv.append($cHeaderCompanyWebsite;
+        $cHeaderSubDiv.append($cHeaderIndustry);
+        $cHeaderDiv.append($cHeaderSubDiv);
+        $cHeader.append($cHeaderDiv);
+
+        $modalThirdContent.append($cHeader);
+
+        /* ------------------------ Company Ratings ------------------------ */
+
+        const $cRating = $('<div>').addClass('card horizontal card-panel hoverable');
+        const $cRatingStacked = $('<div>').addClass('card-stacked');
+        const $cRatingContent = $('<div>').addClass('card-content left-align');
+
+        const $ratings = $('<h4>').text('Ratings');
+        const $cultureAndValues = $('<p>').text('Culture and Values: ' `${job.culture_and_values}`);
+        const $seniorLeadership = $('<p>').text('Senior Leadership: ' `${job.senior_leadership_rating}`);
+        const $compensationAndBenefits = $('<p>').text('Compensation and Benefits: ' `${job.compensation_and_benefits_rating}`);
+        const $careerOpportunities = $('<p>').text('Career Opportunities: ' `${job.career_opportunities_rating}`);
+        const $workLifeBalance = $('<p>').text('Work Life Balance: ' `${job.work_life_balance_rating}`);
+        const $overallRating = $('<p>').text('Culture and Values: ' `${job.overall_rating}`);
+
+        $cRatingcontent.append($ratings);
+        $cRatingcontent.append($cultureAndValues);
+        $cRatingcontent.append($seniorLeadership);
+        $cRatingcontent.append($compensationAndBenefits);
+        $cRatingcontent.append($careerOpportunities);
+        $cRatingcontent.append($workLifeBalance);
+        $cRatingcontent.append($overallRating);
+
+        $cRatingStacked.append($cRatingcontent);
+        $cRating.append($cRatingStacked);
+
+        $modalThirdContent.append($cRatings);
+
+        /* -------------------- Company Featured Review -------------------- */
+
+        const $cFeatRev = $('<div>').addClass('card horizontal card-panel hoverable');
+        const $cFeatRevStacked = $('<div>').addClass('card horizontal card-panel hoverable');
+        const $cFeatRevContent = $('<div>').addClass('card-content left-align');
+
+        const $review = $('<h4>').text('Featured Review');
+        const $reviewedJobTitleAndLocation = $('<h5>').text(`${job.reviewed_job_title}, ${job.review_job_location}`);
+
+        const $cFeatRevContentHeadline = $('<div>').addClass('card-content left-align');
+        const $reviewedHeadline = $('<h5>').text(`${job.review_headline}`);
+        const $pros = $('<p>').text('Pros: ');
+        const $prosReview = $('<p>').text(`${job.pros}`);
+        const $breakline = $('<br />');
+        const $cons = $('<p>').text('Cons: ');
+        const $consReview = $('<p>').text(`${job.cons}`);
+
+        $cFeatRevContentHeadline.append($reviewedHeadline);
+        $cFeatRevContentHeadline.append($pros);
+        $cFeatRevContentHeadline.append($prosReview);
+        $cFeatRevContentHeadline.append($breakline);
+        $cFeatRevContentHeadline.append($cons);
+        $cFeatRevContentHeadline.append($consReview);
+
+        $cFeatRevContent.append($reviewedJobTitleAndLocation);
+        $cFeatRevContent.append($review);
+        $cFeatRevContent.append($cFeatRevContentHeadline);
+
+        $cFeatRevStacked.append($cFeatRevContent);
+        $cFeatRev.append($cFeatRevStacked);
+
+        $modalThirdContent.append(cFeatRev);
+
+        /* -------------------- Footer -------------------- */
+
+        const $exitButton = $('<a>').attr('href', '#!' ).addClass('modal-action modal-close waves-effect waves-green btn-flat').text('Exit');
+        const $footer = $('<div>').addClass('modal-footer');
+
+        $footer.append($exitButton);
+
+        $modalContent.append($footer);
+
+        /* -------------------- ******** -------------------- */
+        $modalContent.append($modalThirdContent);
+        $modalcontainer.append($modalContent);
+
+
+
       }
-
-      // iterate over data to build out view
-      $('div');
-
-      // DOM stuffs
     })
     .fail(($xhr) => {
       Materialize.toast($xhr.responseText, 3000);
