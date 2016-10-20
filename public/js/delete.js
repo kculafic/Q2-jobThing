@@ -2,7 +2,7 @@
 $('.deleteApplication').click((event) => {
   event.preventDefault();
 
-  const jobApplicationsId= $('#jobApplicationsId').val().trim();
+  const jobApplicationsId= $('.jobApplicationsId').val().trim();
 
 
 
