@@ -22,7 +22,18 @@ const authorize = function(req, res, next) {
     next();
   });
 };
-
+  router.delete('/jobApplications', (req, res, next) => {
+  const jobApplicationsId = req.body.jobApplicationsId;
+  return knex('job_applications')
+    .delete('job_applications')
+    .where('id',jobApplicationsId)
+    .then((jobCollection) => {
+      res.send(true);
+    })
+    .catch((err) => {
+     res.send(false);
+   });
+  });
   router.get('/jobApplications', authorize, (req,res,next) => {
     const userId = req.token.userId;
     knex('job_applications')
@@ -60,7 +71,7 @@ router.post('/jobApplications', authorize, (req, res, next ) => {
 
           const company = JSON.parse(companies);
 
-          const companyId = company.response.employers[0].id;
+          let companyId = company.response.employers[0].id;
           const website =  company.response.employers[0].website;
           const industry =  company.response.employers[0].industry;
           const logo =  company.response.employers[0].squareLogo;
@@ -75,7 +86,7 @@ router.post('/jobApplications', authorize, (req, res, next ) => {
           const reviewHeadline = company.response.employers[0].featuredReview.headline;
           const pros = company.response.employers[0].featuredReview.pros;
           const cons = company.response.employers[0].featuredReview.cons;
-        
+
           return knex.transaction(function (t) {
           return knex('companies')
             .transacting(t)
@@ -100,7 +111,7 @@ router.post('/jobApplications', authorize, (req, res, next ) => {
             .returning('id')
             .then(function (response) {
               // console.log(response[0]);
-              const companyId = response[0];
+              let companyId = response[0];
               console.log(companyId);
               return knex('job_applications')
                 .transacting(t)
@@ -135,7 +146,7 @@ router.post('/jobApplications', authorize, (req, res, next ) => {
           .transacting(t)
           .where('company_name', companyName)
           .then(function (response) {
-            const companyId = response[0].id;
+            let companyId = response[0].id;
             return knex('job_applications')
               .transacting(t)
               .insert(decamelizeKeys({

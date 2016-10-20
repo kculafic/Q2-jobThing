@@ -22,7 +22,7 @@ $(document).ready(function() {
         // job.dateApplied = new Date();
         // job.companyName = 'Bob Inc.';
         /* ^^^^^^^^^^^^^^^^^^^^^ */
-
+        console.log(job);
 
         const $card = $('<div>').addClass('card horizontal card-panel hoverable col s12 m7 foobarbobwilley');
         const $logowrapper = $('<div>').addClass('card-image center-align valign-wrapper card-panel hoverable');
