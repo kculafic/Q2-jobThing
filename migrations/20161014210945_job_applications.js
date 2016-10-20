@@ -9,7 +9,7 @@ exports.up = function(knex, Promise) {
     table.string('location').notNullable();
     table.string('url');
     table.boolean('interview');
-    table.string('notes');
+    table.text('notes');
     table.timestamps(true,true);
   })
 };

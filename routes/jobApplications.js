@@ -23,27 +23,11 @@ const authorize = function(req, res, next) {
   });
 };
 
-// router.get('/favorites', authorize, (req, res, next) => {
-// const { userId } = req.token;
-// // const userId = req.token;
-//
-// knex('favorites')
-//   .innerJoin('books', 'books.id', 'favorites.book_id')
-//   .where('favorites.user_id', userId)
-//   .orderBy('books.title', 'ASC')
-//   .then((rows) => {
-//     const favorites = camelizeKeys(rows);
-//
-//     res.send(favorites);
-//   })
-//   .catch((err) => {
-//     next(err);
-//   });
-// });
-  router.get('/jobApplications', (req,res,next) => {
+  router.get('/jobApplications', authorize, (req,res,next) => {
+    const userId = req.token.userId;
     knex('job_applications')
     .innerJoin('companies', 'companies.id', 'job_applications.company_id')
-    .where('user_id', 1)
+    .where('user_id', userId)
     .then((jobCollection) => {
 
       // console.log(jobCollection);
@@ -56,9 +40,9 @@ const authorize = function(req, res, next) {
 
 
 router.post('/jobApplications', authorize, (req, res, next ) => {
-  console.log("helll");
+
   // req.token.userId;
-  const userId = 1;
+  const userId = req.token.userId;
   const companyName = req.body.companyName;
   const positionTitle = req.body.position;
   const url = req.body.url;
@@ -73,16 +57,25 @@ router.post('/jobApplications', authorize, (req, res, next ) => {
       console.log('request');
       rp(`http://api.glassdoor.com/api/api.htm?t.p=100491&t.k=fViN5CriXem&userip=0.0.0.0&useragent=&format=json&v=1&action=employers&q=${companyName}`)
         .then(function (companies) {
-         // Process company
-          // console.log(companies);
+
           const company = JSON.parse(companies);
-          // console.log(company.response.employers[0]);
-          // res.send(true);
+
           const companyId = company.response.employers[0].id;
           const website =  company.response.employers[0].website;
           const industry =  company.response.employers[0].industry;
           const logo =  company.response.employers[0].squareLogo;
-          const overallRating = parseInt(company.response.employers[0].overallRating);
+          const overallRating = parseFloat(company.response.employers[0].overallRating);
+          const cultureAndValuesRating = parseFloat(company.response.employers[0].cultureAndValuesRating);
+          const seniorLeadershipRating = parseFloat(company.response.employers[0].seniorLeadershipRating);
+          const compensationAndBenefitsRating = parseFloat(company.response.employers[0].compensationAndBenefitsRating);
+          const careerOpportunitiesRating = parseFloat(company.response.employers[0].careerOpportunitiesRating);
+          const workLifeBalanceRating = parseFloat(company.response.employers[0].workLifeBalanceRating);
+          const reviewJobTitle = company.response.employers[0].featuredReview.jobTitle;
+          const reviewJobLocation = company.response.employers[0].featuredReview.location;
+          const reviewHeadline = company.response.employers[0].featuredReview.headline;
+          const pros = company.response.employers[0].featuredReview.pros;
+          const cons = company.response.employers[0].featuredReview.cons;
+        
           return knex.transaction(function (t) {
           return knex('companies')
             .transacting(t)
@@ -92,7 +85,17 @@ router.post('/jobApplications', authorize, (req, res, next ) => {
               website,
               industry,
               logo,
-              overallRating
+              overallRating,
+              cultureAndValuesRating,
+              seniorLeadershipRating,
+              compensationAndBenefitsRating,
+              careerOpportunitiesRating,
+              workLifeBalanceRating,
+              reviewJobTitle,
+              reviewJobLocation,
+              reviewHeadline,
+              pros,
+              cons
               }))
             .returning('id')
             .then(function (response) {
@@ -119,7 +122,7 @@ router.post('/jobApplications', authorize, (req, res, next ) => {
         })
         .catch(function () {
           // transaction failed, data rolled back
-          console.log('d');
+
           res.send(false);
         });
       }).catch(function (err) {
@@ -152,7 +155,6 @@ router.post('/jobApplications', authorize, (req, res, next ) => {
       res.send(true);
     })
     .catch(function () {
-      console.log('ff');
       // transaction failed, data rolled back
         res.send(false);
       });
