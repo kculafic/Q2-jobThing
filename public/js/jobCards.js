@@ -93,7 +93,7 @@ const $modalcontainer = $('<div>').addClass('modal').attr('id', `job${count}`);
         const $cRatingContent = $('<div>').addClass('card-content left-align');
 
         const $ratings = $('<h4>').text('Ratings');
-        const $cultureAndValues = $('<p>').text(`Culture and Values: ${job.culture_and_values}`);
+        const $cultureAndValues = $('<p>').text(`Culture and Values: ${job.culture_and_values_rating}`);
         const $seniorLeadership = $('<p>').text(`Senior Leadership: ${job.senior_leadership_rating}`);
         const $compensationAndBenefits = $('<p>').text(`Compensation and Benefits: ${job.compensation_and_benefits_rating}`);
         const $careerOpportunities = $('<p>').text(`Career Opportunities: ${job.career_opportunities_rating}`);
@@ -120,7 +120,7 @@ const $modalcontainer = $('<div>').addClass('modal').attr('id', `job${count}`);
         const $cFeatRevContent = $('<div>').addClass('card-content left-align');
 
         const $review = $('<h4>').text('Featured Review');
-        const $reviewedJobTitleAndLocation = $('<h5>').text(`${job.reviewed_job_title}, ${job.review_job_location}`);
+        const $reviewedJobTitleAndLocation = $('<h5>').text(`${job.review_job_title}, ${job.review_job_location}`);
 
         const $cFeatRevContentHeadline = $('<div>').addClass('card-content left-align');
         const $reviewedHeadline = $('<h5>').text(`${job.review_headline}`);
