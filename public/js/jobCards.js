@@ -15,6 +15,7 @@ $(document).ready(function() {
 
       const $container = $('.card-container');
 
+      let count = 1;
       for (let job of jobCollection){
 
         /* DELETE THESE ONCE JOBCOLLECTION IS UPDATED */
@@ -35,21 +36,15 @@ $(document).ready(function() {
         const $jobId = $('<p>').addClass('jobApplicationId').text(`[Job # ${job.id} ]`);
 
         const $buttonWrapper = $('<div>')
-        const $buttonCompanyInfo = $('<a>').addClass('waves-effect waves-light btn modal-trigger left-align')
-          .attr('href', '#modal1').text('Company Information');
+const $buttonCompanyInfo = $('<a>').addClass('waves-effect waves-light btn modal-trigger left-align').attr('href', `#job${count}`).text('Company Information');
         const $buttonEdit = $('<a>').addClass('editApplication waves-effect waves-light btn center-align-align').text('Edit');
         const $buttonDelete = $('<a>').addClass('deleteApplication waves-effect waves-light btn center-align-align').text('Delete');
-
-        // const $companyinfoButton = $('<div>');
-        // const $moinfo = $('<a>').addClass('center-align waves-effect waves-light btn white-text modal-trigger').attr('href', '#modal1' );
 
         $logowrapper.append($logoimage);
         $jobinfo.append($positiontitle);
         $jobinfo.append($companyandlocation);
         $jobinfo.append($dateapplied);
         $jobinfo.append($jobId);
-        // $companyinfo.append($moinfo);
-        // $jobinfo.append($companyinfo);
 
         $buttonWrapper.append($buttonCompanyInfo);
         $buttonWrapper.append($buttonEdit);
@@ -59,13 +54,12 @@ $(document).ready(function() {
         $card.append($jobinfo);
         $card.append($buttonWrapper);
 
-        $container.prepend($card);
 
         /* ------------------------ +++++++++++++ ------------------------ */
         /* ------------------------ Company Modal ------------------------ */
         /* ------------------------ +++++++++++++ ------------------------ */
 
-        const $modalcontainer = $('<div>').addClass('modal').attr('id', 'modal1');
+const $modalcontainer = $('<div>').addClass('modal').attr('id', `job${count}`);
         const $modalContent = $('<div>').addClass('modal-content');
         const $modalThirdContent = $('<div>').addClass('col s12 m7');
 
@@ -155,7 +149,7 @@ $(document).ready(function() {
         /* -------------------- Footer -------------------- */
 
         const $exitButton = $('<a>').attr('href', '#!' ).addClass('modal-action modal-close waves-effect waves-green btn-flat').text('Exit');
-        const $footer = $('<div>').addClass('modal-footer');
+        const $footer = $('<div>').addClass('`modal-footer`');
 
         $footer.append($exitButton);
 
@@ -165,9 +159,15 @@ $(document).ready(function() {
         $modalContent.append($modalThirdContent);
         $modalcontainer.append($modalContent);
 
+$('body').append($modalcontainer);
 
 
+        $container.prepend($card);
+
+        count++;
       }
+      $('.modal-trigger').leanModal();
+
     })
     .fail(($xhr) => {
       Materialize.toast($xhr.responseText, 3000);
