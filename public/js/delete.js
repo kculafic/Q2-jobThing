@@ -1,11 +1,11 @@
 (function() {
-$('.deleteApplication').click((event) => {
+$('#delete').click((event) => {
   event.preventDefault();
 
-  const jobApplicationsId= $('.jobApplicationsId').val().trim();
+  const jobApplicationsId = $('.jobApplicationsId').val().trim();
 
 
-
+console.log(jobApplicationsId);
 
   const options = {
     data: JSON.stringify({jobApplicationsId}),

@@ -11,11 +11,13 @@ $(document).ready(function() {
 
   $.ajax(options)
     .done((jobCollection) => {
-      console.log(jobCollection);
+      // console.log(jobCollection[1][m].id);
 
       const $container = $('.card-container');
 
-      for (let job of jobCollection){
+      let count = 1;
+      let m = 0;
+      for (let job of jobCollection[0]){
 
         /* DELETE THESE ONCE JOBCOLLECTION IS UPDATED */
         // job.logo = 'https://media.glassdoor.com/sql/6036/amazon-com-squarelogo-1432805660196.png'
@@ -32,30 +34,34 @@ $(document).ready(function() {
         const $positiontitle = $('<h4>').text(job.position_title);
         const $companyandlocation = $('<h5>').text(`${job.company_name}, ${job.location}`);
         const $dateapplied = $('<p>').text(job.date_applied);
-        const $jobId = $('<p>').addClass('jobApplicationId').text(`[Job # ${job.id} ]`)
+        const $jobId = $('<p>').addClass('jobApplicationId').text(`[Job # ${jobCollection[1][m].id} ]`);
 
-        const $companyinfoButton = $('<div>');
-        const $moinfo = $('<a>').addClass('center-align waves-effect waves-light btn white-text modal-trigger').attr('href', '#modal1' );
+        const $buttonWrapper = $('<div>')
+        const $buttonCompanyInfo = $('<a>').addClass('waves-effect waves-light btn modal-trigger left-align').attr('href', `#job${count}`).text('Company Information');
+        const $buttonEdit = $('<a>').addClass('editApplication waves-effect waves-light btn center-align-align').attr('href', `/edit.html?id=${jobCollection[1][m].id}`).text('Edit');
+        const $buttonDelete = $('<a>').addClass('deleteApplication waves-effect waves-light btn center-align-align').attr('id', 'delete').text('Delete');
 
         $logowrapper.append($logoimage);
         $jobinfo.append($positiontitle);
         $jobinfo.append($companyandlocation);
         $jobinfo.append($dateapplied);
         $jobinfo.append($jobId);
-        $companyinfo.append($moinfo);
-        $jobinfo.append($companyinfo);
+
+        $buttonWrapper.append($buttonCompanyInfo);
+        $buttonWrapper.append($buttonEdit);
+        $buttonWrapper.append($buttonDelete);
 
         $card.append($logowrapper);
         $card.append($jobinfo);
+        $card.append($buttonWrapper);
 
-        $container.prepend($card);
 
         /* ------------------------ +++++++++++++ ------------------------ */
         /* ------------------------ Company Modal ------------------------ */
         /* ------------------------ +++++++++++++ ------------------------ */
 
-        const $modalcontainer = $('<div>').addClass('modal').addId('modal1');
-        const $modalcontent = $('<div>').addClass('modal-content');
+const $modalcontainer = $('<div>').addClass('modal').attr('id', `job${count}`);
+        const $modalContent = $('<div>').addClass('modal-content');
         const $modalThirdContent = $('<div>').addClass('col s12 m7');
 
         /* ------------------------ Company Header ------------------------ */
@@ -66,15 +72,15 @@ $(document).ready(function() {
 
         const $cHeaderDiv = $('<div>').addClass('card-stacked');
         const $cHeaderSubDiv = $('<div>').addClass('card-content left-align');
-        const $cHeaderComanyName = $('<h3>').text(job.company_name);
+        const $cHeaderCompanyName = $('<h3>').text(job.company_name);
         const $cHeaderCompanyWebsite = $('<a>').attr('href', job.website );
         const $cHeaderIndustry = $('<p>').text(job.industry);
 
-        $cHeaderLogo.append($cHeaderCompanyLogoImage);
+        $cHeaderLogo.append($cHeaderLogoImage);
         $cHeader.append($cHeaderLogo);
 
         $cHeaderSubDiv.append($cHeaderCompanyName);
-        $cHeaderSubDiv.append($cHeaderCompanyWebsite;
+        $cHeaderSubDiv.append($cHeaderCompanyWebsite);
         $cHeaderSubDiv.append($cHeaderIndustry);
         $cHeaderDiv.append($cHeaderSubDiv);
         $cHeader.append($cHeaderDiv);
@@ -88,25 +94,25 @@ $(document).ready(function() {
         const $cRatingContent = $('<div>').addClass('card-content left-align');
 
         const $ratings = $('<h4>').text('Ratings');
-        const $cultureAndValues = $('<p>').text('Culture and Values: ' `${job.culture_and_values}`);
-        const $seniorLeadership = $('<p>').text('Senior Leadership: ' `${job.senior_leadership_rating}`);
-        const $compensationAndBenefits = $('<p>').text('Compensation and Benefits: ' `${job.compensation_and_benefits_rating}`);
-        const $careerOpportunities = $('<p>').text('Career Opportunities: ' `${job.career_opportunities_rating}`);
-        const $workLifeBalance = $('<p>').text('Work Life Balance: ' `${job.work_life_balance_rating}`);
-        const $overallRating = $('<p>').text('Culture and Values: ' `${job.overall_rating}`);
+        const $cultureAndValues = $('<p>').text(`Culture and Values: ${job.culture_and_values_rating}`);
+        const $seniorLeadership = $('<p>').text(`Senior Leadership: ${job.senior_leadership_rating}`);
+        const $compensationAndBenefits = $('<p>').text(`Compensation and Benefits: ${job.compensation_and_benefits_rating}`);
+        const $careerOpportunities = $('<p>').text(`Career Opportunities: ${job.career_opportunities_rating}`);
+        const $workLifeBalance = $('<p>').text(`Work Life Balance: ${job.work_life_balance_rating}`);
+        const $overallRating = $('<p>').text(`Culture and Values: ${job.overall_rating}`);
 
-        $cRatingcontent.append($ratings);
-        $cRatingcontent.append($cultureAndValues);
-        $cRatingcontent.append($seniorLeadership);
-        $cRatingcontent.append($compensationAndBenefits);
-        $cRatingcontent.append($careerOpportunities);
-        $cRatingcontent.append($workLifeBalance);
-        $cRatingcontent.append($overallRating);
+        $cRatingContent.append($ratings);
+        $cRatingContent.append($cultureAndValues);
+        $cRatingContent.append($seniorLeadership);
+        $cRatingContent.append($compensationAndBenefits);
+        $cRatingContent.append($careerOpportunities);
+        $cRatingContent.append($workLifeBalance);
+        $cRatingContent.append($overallRating);
 
-        $cRatingStacked.append($cRatingcontent);
+        $cRatingStacked.append($cRatingContent);
         $cRating.append($cRatingStacked);
 
-        $modalThirdContent.append($cRatings);
+        $modalThirdContent.append($cRating);
 
         /* -------------------- Company Featured Review -------------------- */
 
@@ -115,7 +121,7 @@ $(document).ready(function() {
         const $cFeatRevContent = $('<div>').addClass('card-content left-align');
 
         const $review = $('<h4>').text('Featured Review');
-        const $reviewedJobTitleAndLocation = $('<h5>').text(`${job.reviewed_job_title}, ${job.review_job_location}`);
+        const $reviewedJobTitleAndLocation = $('<h5>').text(`${job.review_job_title}, ${job.review_job_location}`);
 
         const $cFeatRevContentHeadline = $('<div>').addClass('card-content left-align');
         const $reviewedHeadline = $('<h5>').text(`${job.review_headline}`);
@@ -139,12 +145,12 @@ $(document).ready(function() {
         $cFeatRevStacked.append($cFeatRevContent);
         $cFeatRev.append($cFeatRevStacked);
 
-        $modalThirdContent.append(cFeatRev);
+        $modalThirdContent.append($cFeatRev);
 
         /* -------------------- Footer -------------------- */
 
         const $exitButton = $('<a>').attr('href', '#!' ).addClass('modal-action modal-close waves-effect waves-green btn-flat').text('Exit');
-        const $footer = $('<div>').addClass('modal-footer');
+        const $footer = $('<div>').addClass('`modal-footer`');
 
         $footer.append($exitButton);
 
@@ -154,9 +160,16 @@ $(document).ready(function() {
         $modalContent.append($modalThirdContent);
         $modalcontainer.append($modalContent);
 
+$('body').append($modalcontainer);
 
 
+        $container.prepend($card);
+
+        count++;
+        m++;
       }
+      $('.modal-trigger').leanModal();
+
     })
     .fail(($xhr) => {
       Materialize.toast($xhr.responseText, 3000);
