@@ -49,6 +49,20 @@ const authorize = function(req, res, next) {
    });
   });
 
+  // router.get('/jobApplications/all', authorize, (req,res,next) => {
+  //   const userId = req.token.userId;
+  //   knex('companies')
+  //   .innerJoin('companies', 'companies.id', 'job_applications.company_id')
+  //   .where('user_id', userId)
+  //   .then((jobCollection) => {
+  //
+  //     // console.log(jobCollection);
+  //     res.send(jobCollection);
+  //   })
+  //   .catch((err) => {
+  //    next(err);
+  //  });
+  // });
 
 router.post('/jobApplications', authorize, (req, res, next ) => {
 
