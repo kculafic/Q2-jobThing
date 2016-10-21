@@ -39,30 +39,74 @@ const authorize = function(req, res, next) {
     knex('job_applications')
     .innerJoin('companies', 'companies.id', 'job_applications.company_id')
     .where('user_id', userId)
+    .returning('job_applications.id')
     .then((jobCollection) => {
 
       // console.log(jobCollection);
-      res.send(jobCollection);
+      // res.send(jobCollection);
+      return knex('job_applications').where('user_id', userId)
+      .then((j) => {
+              console.log(jobCollection);
+              res.send([jobCollection,j]);
+              res.send(j);
+
+          })
     })
     .catch((err) => {
      next(err);
    });
   });
+  router.get('/jobApplications/:id', (req, res, next) => {
+      knex('jobApplications')
+      .where('id', req.params.id)
+      .first()
+      .then((row) => {
+        if (!row) {
+          throw boom.create(404, 'Not Found');
+        }
 
-  // router.get('/jobApplications/all', authorize, (req,res,next) => {
-  //   const userId = req.token.userId;
-  //   knex('companies')
-  //   .innerJoin('companies', 'companies.id', 'job_applications.company_id')
-  //   .where('user_id', userId)
-  //   .then((jobCollection) => {
-  //
-  //     // console.log(jobCollection);
-  //     res.send(jobCollection);
-  //   })
-  //   .catch((err) => {
-  //    next(err);
-  //  });
-  // });
+        const book = camelizeKeys(row);
+
+        res.send(book);
+      })
+      .catch((err) => {
+        next(err);
+      });
+  });
+  router.patch('/jobApplications/:id', (req, res, next) => {
+    // req.params.id)
+    knex('jobApplications')
+      .where('id', req.params.id)
+      .first()
+      .then((app) => {
+        if (!app) {
+          throw boom.create(404, 'Not Found');
+        }
+        console.log(notes);
+        const {interview,notes} = req.body;
+        const jobApp = {};
+
+        if (interview) {
+          jobApp.interview = interview;
+        }
+
+        if (notes) {
+          jobApp.notes = notes;
+        }
+
+        return knex('jobApplications')
+          .update(decamelizeKeys(jobApp), '*')
+          .where('id', req.params.id);
+      })
+      .then((rows) => {
+        const japp = camelizeKeys(rows[0]);
+
+        res.send(japp);
+      })
+      .catch((err) => {
+        next(err);
+      });
+  });
 
 router.post('/jobApplications', authorize, (req, res, next ) => {
 

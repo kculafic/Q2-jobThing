@@ -11,12 +11,13 @@ $(document).ready(function() {
 
   $.ajax(options)
     .done((jobCollection) => {
-      console.log(jobCollection);
+      // console.log(jobCollection[1][m].id);
 
       const $container = $('.card-container');
 
       let count = 1;
-      for (let job of jobCollection){
+      let m = 0;
+      for (let job of jobCollection[0]){
 
         /* DELETE THESE ONCE JOBCOLLECTION IS UPDATED */
         // job.logo = 'https://media.glassdoor.com/sql/6036/amazon-com-squarelogo-1432805660196.png'
@@ -33,12 +34,12 @@ $(document).ready(function() {
         const $positiontitle = $('<h4>').text(job.position_title);
         const $companyandlocation = $('<h5>').text(`${job.company_name}, ${job.location}`);
         const $dateapplied = $('<p>').text(job.date_applied);
-        const $jobId = $('<p>').addClass('jobApplicationId').text(`[Job # ${job.id} ]`);
+        const $jobId = $('<p>').addClass('jobApplicationId').text(`[Job # ${jobCollection[1][m].id} ]`);
 
         const $buttonWrapper = $('<div>')
-const $buttonCompanyInfo = $('<a>').addClass('waves-effect waves-light btn modal-trigger left-align').attr('href', `#job${count}`).text('Company Information');
-        const $buttonEdit = $('<a>').addClass('editApplication waves-effect waves-light btn center-align-align').text('Edit');
-        const $buttonDelete = $('<a>').addClass('deleteApplication waves-effect waves-light btn center-align-align').text('Delete');
+        const $buttonCompanyInfo = $('<a>').addClass('waves-effect waves-light btn modal-trigger left-align').attr('href', `#job${count}`).text('Company Information');
+        const $buttonEdit = $('<a>').addClass('editApplication waves-effect waves-light btn center-align-align').attr('href', `/edit.html?id=${jobCollection[1][m].id}`).text('Edit');
+        const $buttonDelete = $('<a>').addClass('deleteApplication waves-effect waves-light btn center-align-align').attr('id', 'delete').attr('data-id', job.id).text('Delete');
 
         $logowrapper.append($logoimage);
         $jobinfo.append($positiontitle);
@@ -165,6 +166,7 @@ $('body').append($modalcontainer);
         $container.prepend($card);
 
         count++;
+        m++;
       }
       $('.modal-trigger').leanModal();
 
