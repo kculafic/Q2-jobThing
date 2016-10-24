@@ -6,6 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "knex": "knex",
+    "heroku-postbuild": "knex migrate:latest",
+    "nf": "nf start",
+    "nodemon": "nodemon server.js",
     "lint": "eslint",
     "start": "nodemon server.js"
   },
@@ -36,5 +39,10 @@
   "bugs": {
     "url": "https://github.com/kculafic/jobThing/issues"
   },
-  "homepage": "https://github.com/kculafic/jobThing#readme"
+  "homepage": {
+    "url": "https://github.com/kculafic/jobThing#readme"
+  },
+  "engines": {
+    "node": "6.6.0"
+  }
 }
