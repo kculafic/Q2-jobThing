@@ -13,20 +13,21 @@
       return Materialize.toast('Company name must not be blank', 3000);
     }
 
-  const options = {
-    contentType: 'application/json',
-    data: JSON.stringify({ companyName, position, location, url , date}),
-    dataType: 'json',
-    type: 'POST',
-    url: '/jobApplications '
-  };
-  $.ajax(options)
-    .done(() => {
-      window.location.href = '/user.html';
-    })
-    .fail(($xhr) => {
-      Materialize.toast($xhr.responseText, 3000);
-    });
-});
+    const options = {
+      contentType: 'application/json',
 
+      data: JSON.stringify({ companyName, position, location, url, date }),
+      dataType: 'json',
+      type: 'POST',
+      url: '/jobApplications '
+    };
+
+    $.ajax(options)
+      .done(() => {
+        window.location.href = '/user.html';
+      })
+      .fail(($xhr) => {
+        Materialize.toast($xhr.responseText, 3000);
+      });
+  });
 })();

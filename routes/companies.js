@@ -7,9 +7,8 @@ const knex = require('../knex');
 const { camelizeKeys, decamelizeKeys } = require('humps');
 const rp = require('request-promise');
 
-
-// eslint-disable-next-line new-cap
 const router = express.Router();
+
 router.get('/companies', (_req, res, next) => {
   knex('companies')
     .orderBy('id')
@@ -23,37 +22,24 @@ router.get('/companies', (_req, res, next) => {
     });
 });
 router.get('/companies/:id', (req, res, next) => {
- knex('companies')
- .where('id', req.params.id)
- .first()
- .then((row) => {
-   if (!row) {
-     throw boom.create(404, 'Not Found');
-   }
-   const company = camelizeKeys(row);
+  knex('companies')
+  .where('id', req.params.id)
+  .first()
+  .then((row) => {
+    if (!row) {
+      throw boom.create(404, 'Not Found');
+    }
+    const company = camelizeKeys(row);
 
-   res.send(company);
- })
- .catch((err) => {
-   next(err);
- });
- });
+    res.send(company);
+  })
+  .catch((err) => {
+    next(err);
+  });
+});
 
- router.post('/companies', (req, res, next) => {
-   console.log(req.body);
+router.post('/companies', (req, res, next) => {
   const { companyId, name, website, industry, logo } = req.body;
-
-  // if (!title || !title.trim()) {
-  //   return next(boom.create(400, 'Title must not be blank'));
-  // }
-  //
-  // if (!artist || !artist.trim()) {
-  //   return next(boom.create(400, 'Artist must not be blank'));
-  // }
-  //
-  // if (!Number.isInteger(likes)) {
-  //   return next(boom.create(400, 'Likes must be an integer'));
-  // }
 
   const insertCompany = { companyId, name, website, industry, logo };
 
@@ -68,4 +54,5 @@ router.get('/companies/:id', (req, res, next) => {
       next(err);
     });
 });
- module.exports = router;
+
+module.exports = router;

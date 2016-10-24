@@ -3,7 +3,6 @@ $(document).ready(function() {
 
   const options = {
     contentType: 'application/json',
-    // data: JSON.stringify({ firstName, lastName, email, password }),
     dataType: 'json',
     type: 'get',
     url: '/jobapplications'
@@ -11,22 +10,11 @@ $(document).ready(function() {
 
   $.ajax(options)
     .done((jobCollection) => {
-      // console.log(jobCollection[1][m].id);
-
       const $container = $('.card-container');
-
       let count = 1;
       let m = 0;
+
       for (let job of jobCollection[0]){
-
-        /* DELETE THESE ONCE JOBCOLLECTION IS UPDATED */
-        // job.logo = 'https://media.glassdoor.com/sql/6036/amazon-com-squarelogo-1432805660196.png'
-        // job.dateApplied = new Date();
-        // job.jobName = 'Bob Inc.';
-        /* ^^^^^^^^^^^^^^^^^^^^^ */
-
-
-        /* ------------------------ Job Card ------------------------ */
         const $card = $('<div>').addClass('card horizontal card-panel hoverable col s12 m7');
         const $logowrapper = $('<div>').addClass('card-image center-align valign-wrapper card-panel hoverable');
         const $logoimage = $('<img>').attr('src', job.logo );
@@ -55,16 +43,9 @@ $(document).ready(function() {
         $card.append($jobinfo);
         $card.append($buttonWrapper);
 
-
-        /* ------------------------ +++++++++++++ ------------------------ */
-        /* ------------------------ Company Modal ------------------------ */
-        /* ------------------------ +++++++++++++ ------------------------ */
-
-const $modalcontainer = $('<div>').addClass('modal').attr('id', `job${count}`);
+        const $modalcontainer = $('<div>').addClass('modal').attr('id', `job${count}`);
         const $modalContent = $('<div>').addClass('modal-content');
         const $modalThirdContent = $('<div>').addClass('col s12 m7');
-
-        /* ------------------------ Company Header ------------------------ */
 
         const $cHeader = $('<div>').addClass('card horizontal card-panel hoverable');
         const $cHeaderLogo = $('<div>').addClass('card-image center-align valign-wrapper card-panel hoverable');
@@ -86,8 +67,6 @@ const $modalcontainer = $('<div>').addClass('modal').attr('id', `job${count}`);
         $cHeader.append($cHeaderDiv);
 
         $modalThirdContent.append($cHeader);
-
-        /* ------------------------ Company Ratings ------------------------ */
 
         const $cRating = $('<div>').addClass('card horizontal card-panel hoverable');
         const $cRatingStacked = $('<div>').addClass('card-stacked');
@@ -114,8 +93,6 @@ const $modalcontainer = $('<div>').addClass('modal').attr('id', `job${count}`);
 
         $modalThirdContent.append($cRating);
 
-        /* -------------------- Company Featured Review -------------------- */
-
         const $cFeatRev = $('<div>').addClass('card horizontal card-panel hoverable');
         const $cFeatRevStacked = $('<div>').addClass('card horizontal card-panel hoverable');
         const $cFeatRevContent = $('<div>').addClass('card-content left-align');
@@ -137,31 +114,22 @@ const $modalcontainer = $('<div>').addClass('modal').attr('id', `job${count}`);
         $cFeatRevContentHeadline.append($breakline);
         $cFeatRevContentHeadline.append($cons);
         $cFeatRevContentHeadline.append($consReview);
-
         $cFeatRevContent.append($reviewedJobTitleAndLocation);
         $cFeatRevContent.append($review);
         $cFeatRevContent.append($cFeatRevContentHeadline);
-
         $cFeatRevStacked.append($cFeatRevContent);
         $cFeatRev.append($cFeatRevStacked);
-
         $modalThirdContent.append($cFeatRev);
-
-        /* -------------------- Footer -------------------- */
 
         const $exitButton = $('<a>').attr('href', '#!' ).addClass('modal-action modal-close waves-effect waves-green btn-flat').text('Exit');
         const $footer = $('<div>').addClass('`modal-footer`');
 
         $footer.append($exitButton);
-
         $modalContent.append($footer);
-
-        /* -------------------- ******** -------------------- */
         $modalContent.append($modalThirdContent);
         $modalcontainer.append($modalContent);
 
-$('body').append($modalcontainer);
-
+        $('body').append($modalcontainer);
 
         $container.prepend($card);
 

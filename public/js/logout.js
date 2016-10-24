@@ -4,7 +4,8 @@
   $.getJSON('/token')
     .done((loggedIn) => {
       if (loggedIn) {
-         const $logout = $('#logout');
+        const $logout = $('#logout');
+
         $logout.click((event) => {
           event.preventDefault();
 
@@ -22,11 +23,11 @@
               Materialize.toast('Unable to log out. Please try again.', 3000);
             });
         });
-      }
-      else {
+      } else {
         window.location.href = '/index.html';
       }
     })
+
     .fail(($xhr) => {
       window.location.href = '/index.html';
       Materialize.toast($xhr.responseText, 3000);

@@ -1,12 +1,6 @@
 (function() {
   'use strict';
-
-
-    const jobId = window.QUERY_PARAMETERS.id;
-    console.log(jobId);
-  // if (!jobId) {
-  //   window.location.href = '/user.html';
-  // }
+  const jobId = window.QUERY_PARAMETERS.id;
 
   const renderBook = function(job) {
     $('#notes').val(job.notes);
@@ -16,14 +10,12 @@
     Materialize.updateTextFields();
   };
 
-  const attachListeners = function(book) {
-    // eslint-disable-next-line max-statements
+  const attachListeners = function() {
     $('#editNotes').submit((event) => {
       event.preventDefault();
 
       const notes = $('#notes').val().trim();
       const interview = $('#interview').val().trim();
-
 
       if (!notes) {
         return Materialize.toast('Notes must not be blank', 3000);
@@ -33,10 +25,9 @@
         return Materialize.toast('Interview must not be blank', 3000);
       }
 
-
       const options = {
         contentType: 'application/json',
-        data: JSON.stringify({ notes, interview}),
+        data: JSON.stringify({ notes, interview }),
         dataType: 'json',
         type: 'PATCH',
         url: `/jobApplications/${jobId}`
