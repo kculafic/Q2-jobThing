@@ -6,4 +6,4 @@ jobThing is a full-stack web interface to help visually track job applications. 
 
 Technologies used: Node.js, PostgreSQL, Express, Knex, JS/HTML/CSS, Materialize, and jQuery.
 
-![](./stock/promo.jpg) 
+![](./promo.jpg) 
